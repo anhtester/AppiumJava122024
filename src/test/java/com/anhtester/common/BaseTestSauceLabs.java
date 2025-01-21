@@ -59,7 +59,7 @@ public class BaseTestSauceLabs {
         options.setAutomationName("UiAutomator2");
         options.setDeviceName("Pixel_9_Pro_XL_API_34");
         options.setAppPackage("com.saucelabs.mydemoapp.android");
-        options.setAppActivity("com.saucelabs.mydemoapp.android.view.activities.MainActivity");
+        options.setAppActivity("com.saucelabs.mydemoapp.android.view.activities.SplashActivity");
         options.setNoReset(false);
         options.setFullReset(false);
 
