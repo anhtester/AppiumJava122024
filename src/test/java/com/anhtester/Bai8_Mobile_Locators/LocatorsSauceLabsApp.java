@@ -7,6 +7,8 @@ import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class LocatorsSauceLabsApp extends BaseTest {
     @Test
     public void testDemoLocators() {
@@ -35,5 +37,27 @@ public class LocatorsSauceLabsApp extends BaseTest {
 
 //        WebElement productImage = DriverManager.getDriver().findElement(AppiumBy.iOSNsPredicateString("android.widget.ImageView"));
 //        productImage.click();
+    }
+
+    @Test
+    public void testXpathAxes(){
+        sleep(2);
+        WebElement productName2 = DriverManager.getDriver().findElement(AppiumBy.xpath("//androidx.recyclerview.widget.RecyclerView[@content-desc=\"Displays all products of catalog\"]/android.view.ViewGroup[2]/android.widget.TextView[1]"));
+        System.out.println(productName2.getText());
+
+        WebElement productPrice2 = DriverManager.getDriver().findElement(AppiumBy.xpath("//androidx.recyclerview.widget.RecyclerView[@content-desc=\"Displays all products of catalog\"]/android.view.ViewGroup[2]/android.widget.TextView[2]"));
+        System.out.println(productPrice2.getText());
+
+        WebElement productName3 = DriverManager.getDriver().findElement(AppiumBy.xpath("//androidx.recyclerview.widget.RecyclerView[@content-desc=\"Displays all products of catalog\"]/android.view.ViewGroup[3]/android.widget.TextView[1]"));
+        System.out.println(productName3.getText());
+
+        WebElement parentElement = DriverManager.getDriver().findElement(AppiumBy.accessibilityId("Displays all products of catalog"));
+        //WebElement childElement = parentElement.findElement(AppiumBy.xpath("child::android.view.ViewGroup[4]"));
+        List<WebElement> childElements = parentElement.findElements(AppiumBy.xpath("child::*"));
+        System.out.println(childElements.size());
+        //System.out.println(childElement.getText());
+        for (WebElement element : childElements) {
+            System.out.println(element);
+        }
     }
 }
