@@ -4,6 +4,7 @@ import com.anhtester.common.BaseTest;
 import com.anhtester.common.BaseTestSauceLabs;
 import com.anhtester.drivers.DriverManager;
 import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -40,7 +41,7 @@ public class LocatorsSauceLabsApp extends BaseTest {
     }
 
     @Test
-    public void testXpathAxes(){
+    public void testXpathAxes_Buoi2(){
         sleep(2);
         WebElement productName2 = DriverManager.getDriver().findElement(AppiumBy.xpath("//androidx.recyclerview.widget.RecyclerView[@content-desc=\"Displays all products of catalog\"]/android.view.ViewGroup[2]/android.widget.TextView[1]"));
         System.out.println(productName2.getText());
@@ -59,5 +60,42 @@ public class LocatorsSauceLabsApp extends BaseTest {
         for (WebElement element : childElements) {
             System.out.println(element);
         }
+    }
+
+    @Test
+    public void testXpathAxes_Buoi3(){
+
+        //Cách 1 dựa vào text tương ứng thuộc tính text
+        WebElement productName = DriverManager.getDriver().findElement(By.xpath("//android.widget.TextView[@text='Sauce Labs Backpack']"));
+        String textValue = productName.getAttribute("text");
+        System.out.println("Product name: " + textValue);
+
+        //Cách 2 dựa vào thuộc tính khác
+        System.out.println("================================");
+        List<WebElement> productTitles = DriverManager.getDriver().findElements(By.xpath("//android.widget.TextView[@content-desc='Product Title']"));
+        for (WebElement item : productTitles) {
+            System.out.println(item.getAttribute("text"));
+        }
+
+        //Cách 3 dùng hàm contains
+        System.out.println("================================");
+        List<WebElement> productNameContains = DriverManager.getDriver().findElements(By.xpath("//android.widget.TextView[contains(@text,'Sauce Labs Backpack')]"));
+        for (WebElement item : productNameContains) {
+            System.out.println(item.getAttribute("text"));
+        }
+
+        //Cách 4 dùng hàm translate không phân biệt hoa thường
+        System.out.println("================================");
+        WebElement productName2 = DriverManager.getDriver().findElement(By.xpath("//android.widget.TextView[translate(@text, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sauce labs backpack']"));
+        String textValue2 = productName2.getAttribute("text");
+        System.out.println("Product name: " + textValue2);
+
+        //Cách 5 dùng hàm and or để kết hợp điều kiện
+        System.out.println("================================");
+        WebElement productName3 = DriverManager.getDriver().findElement(By.xpath("//android.widget.TextView[@content-desc='Product Title' and @text='Sauce Labs Backpack']"));
+        String textValue3 = productName3.getAttribute("text");
+        System.out.println("Product name: " + textValue3);
+
+
     }
 }
