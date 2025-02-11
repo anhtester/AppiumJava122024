@@ -98,4 +98,22 @@ public class LocatorsSauceLabsApp extends BaseTest {
 
 
     }
+
+    @Test
+    public void testXpathAxes_Buoi4(){
+        //Cách 7 lấy phần tử tổ tiên (ancestor)
+        List<WebElement> ancestorProductName = DriverManager.getDriver().findElements(By.xpath("(//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"Sauce Labs Backpack\"]/ancestor::android.view.ViewGroup[1])/android.widget.TextView[2]"));
+        int size7 = ancestorProductName.size();
+        System.out.println("Total ancestor of Product Name: " + size7);
+        System.out.println(ancestorProductName.get(0).getText());
+
+        //Cách 8 lấy phần tử con và cháu (descendant)
+        List<WebElement> descendantProductName = DriverManager.getDriver().findElements(By.xpath("(//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"Sauce Labs Backpack\"]/ancestor::android.view.ViewGroup[1])/android.widget.TextView[2]"));
+        int size8 = descendantProductName.size();
+        System.out.println("Total descendant of Product Name: " + size8);
+
+        //Cách 9 lấy phần tử anh chị em bên dưới (following-sibling)
+        WebElement followingSiblingProductName = DriverManager.getDriver().findElement(By.xpath("//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"Sauce Labs Backpack\"]/following-sibling::android.widget.TextView"));
+        System.out.println(followingSiblingProductName.getText());
+    }
 }
