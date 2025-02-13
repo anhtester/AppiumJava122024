@@ -1,7 +1,6 @@
 package com.anhtester.Bai8_Mobile_Locators;
 
 import com.anhtester.common.BaseTest;
-import com.anhtester.common.BaseTestSauceLabs;
 import com.anhtester.drivers.DriverManager;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;

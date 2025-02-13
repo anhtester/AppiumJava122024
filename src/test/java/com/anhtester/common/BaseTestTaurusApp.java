@@ -15,7 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
-public class BaseTestSauceLabs {
+public class BaseTestTaurusApp {
 
     private AppiumDriverLocalService service;
     private String HOST = "127.0.0.1";
@@ -58,8 +58,8 @@ public class BaseTestSauceLabs {
         options.setPlatformVersion("14");
         options.setAutomationName("UiAutomator2");
         options.setDeviceName("Pixel_9_Pro_XL_API_34");
-        options.setAppPackage("com.saucelabs.mydemoapp.android");
-        options.setAppActivity("com.saucelabs.mydemoapp.android.view.activities.SplashActivity");
+        options.setAppPackage("com.anhtester.mobile_app.taurus");
+        options.setAppActivity("com.anhtester.mobile_app.taurus.MainActivity");
         options.setNoReset(false);
         options.setFullReset(false);
 
@@ -70,7 +70,7 @@ public class BaseTestSauceLabs {
             throw new RuntimeException(e);
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
     }
 
@@ -82,6 +82,14 @@ public class BaseTestSauceLabs {
         if (service != null && service.isRunning()) {
             service.stop();
             System.out.println("##### Appium server stopped.");
+        }
+    }
+
+    public void sleep(double second){
+        try {
+            Thread.sleep((long) (1000*second));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
