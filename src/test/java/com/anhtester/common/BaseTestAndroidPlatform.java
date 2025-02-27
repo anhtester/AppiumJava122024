@@ -1,8 +1,8 @@
 package com.anhtester.common;
 
-import com.anhtester.drivers.DriverManager;
+import com.anhtester.drivers.AndroidDriverManager;
 import com.anhtester.helpers.SystemHelpers;
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -15,7 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
-public class BaseTest {
+public class BaseTestAndroidPlatform {
 
     private AppiumDriverLocalService service;
     private String HOST = "127.0.0.1";
@@ -48,7 +48,7 @@ public class BaseTest {
 
     @BeforeTest
     public void setUpDriver() {
-        AppiumDriver driver;
+        AndroidDriver driver;
         UiAutomator2Options options = new UiAutomator2Options();
 
         System.out.println("***SERVER ADDRESS: " + HOST);
@@ -63,11 +63,9 @@ public class BaseTest {
         options.setNoReset(false);
         options.setFullReset(false);
 
-        options.setAutoGrantPermissions(false);
-
         try {
-            driver = new AppiumDriver(new URL("http://" + HOST + ":" + PORT), options);
-            DriverManager.setDriver(driver);
+            driver = new AndroidDriver(new URL("http://" + HOST + ":" + PORT), options);
+            AndroidDriverManager.setDriver(driver);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -78,8 +76,8 @@ public class BaseTest {
 
     @AfterTest
     public void tearDownDriver() {
-        if (DriverManager.getDriver() != null) {
-            DriverManager.quitDriver();
+        if (AndroidDriverManager.getDriver() != null) {
+            AndroidDriverManager.quitDriver();
         }
         if (service != null && service.isRunning()) {
             service.stop();

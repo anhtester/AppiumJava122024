@@ -1,10 +1,9 @@
-package com.anhtester.Bao10_Radio_Checkbox;
+package com.anhtester.Bai10_Radio_Checkbox;
 
 import com.anhtester.common.BaseTestTaurusApp;
 import com.anhtester.drivers.DriverManager;
 import com.anhtester.keywords.MobileUI;
 import io.appium.java_client.AppiumBy;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 public class DemoRadioCheckboxSwitch extends BaseTestTaurusApp {
