@@ -7,9 +7,10 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +47,7 @@ public class BaseTest {
 
     }
 
-    @BeforeTest
+    @BeforeMethod
     public void setUpDriver() {
         AppiumDriver driver;
         UiAutomator2Options options = new UiAutomator2Options();
@@ -72,26 +73,23 @@ public class BaseTest {
             throw new RuntimeException(e);
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
     }
 
-    @AfterTest
+    @AfterMethod
     public void tearDownDriver() {
         if (DriverManager.getDriver() != null) {
             DriverManager.quitDriver();
-        }
-        if (service != null && service.isRunning()) {
-            service.stop();
-            System.out.println("##### Appium server stopped.");
+            System.out.println("##### Driver quit and removed.");
         }
     }
 
-    public void sleep(double second) {
-        try {
-            Thread.sleep((long) (1000 * second));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    @AfterSuite
+    public void stopAppiumServer() {
+        if (service != null && service.isRunning()) {
+            service.stop();
+            System.out.println("##### Appium server stopped.");
         }
     }
 

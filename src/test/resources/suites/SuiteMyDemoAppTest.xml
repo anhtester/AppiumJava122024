@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite My Demo App Test" verbose="1">
+    <test name="MyDemoAppTest">
+        <classes>
+            <class name="com.anhtester.Bai14_Annotations.MyDemoAppTest"/>
+        </classes>
+    </test>
+</suite>

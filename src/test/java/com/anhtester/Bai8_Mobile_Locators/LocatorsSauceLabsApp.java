@@ -2,6 +2,7 @@ package com.anhtester.Bai8_Mobile_Locators;
 
 import com.anhtester.common.BaseTest;
 import com.anhtester.drivers.DriverManager;
+import com.anhtester.keywords.MobileUI;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -28,11 +29,11 @@ public class LocatorsSauceLabsApp extends BaseTest {
         //image1.click();
 
         DriverManager.getDriver().findElement(AppiumBy.xpath("(//android.widget.ImageView[@content-desc=\"Product Image\"])[1]")).click();
-        sleep(1);
+        MobileUI.sleep(1);
         DriverManager.getDriver().findElement(AppiumBy.accessibilityId("Tap to add product to cart")).click();
-        sleep(1);
+        MobileUI.sleep(1);
         DriverManager.getDriver().findElement(AppiumBy.accessibilityId("Tap to add product to cart")).click();
-        sleep(1);
+        MobileUI.sleep(1);
         DriverManager.getDriver().findElement(AppiumBy.accessibilityId("Tap to add product to cart")).click();
 
 //        WebElement productImage = DriverManager.getDriver().findElement(AppiumBy.iOSNsPredicateString("android.widget.ImageView"));
@@ -40,8 +41,8 @@ public class LocatorsSauceLabsApp extends BaseTest {
     }
 
     @Test
-    public void testXpathAxes_Buoi2(){
-        sleep(2);
+    public void testXpathAxes_Buoi2() {
+        MobileUI.sleep(2);
         WebElement productName2 = DriverManager.getDriver().findElement(AppiumBy.xpath("//androidx.recyclerview.widget.RecyclerView[@content-desc=\"Displays all products of catalog\"]/android.view.ViewGroup[2]/android.widget.TextView[1]"));
         System.out.println(productName2.getText());
 
@@ -62,7 +63,7 @@ public class LocatorsSauceLabsApp extends BaseTest {
     }
 
     @Test
-    public void testXpathAxes_Buoi3(){
+    public void testXpathAxes_Buoi3() {
 
         //Cách 1 dựa vào text tương ứng thuộc tính text
         WebElement productName = DriverManager.getDriver().findElement(By.xpath("//android.widget.TextView[@text='Sauce Labs Backpack']"));
@@ -99,7 +100,7 @@ public class LocatorsSauceLabsApp extends BaseTest {
     }
 
     @Test
-    public void testXpathAxes_Buoi4(){
+    public void testXpathAxes_Buoi4() {
         //Cách 7 lấy phần tử tổ tiên (ancestor)
         List<WebElement> ancestorProductName = DriverManager.getDriver().findElements(By.xpath("(//android.widget.TextView[@content-desc=\"Product Title\" and @text=\"Sauce Labs Backpack\"]/ancestor::android.view.ViewGroup[1])/android.widget.TextView[2]"));
         int size7 = ancestorProductName.size();
