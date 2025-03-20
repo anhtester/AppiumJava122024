@@ -1,18 +1,20 @@
 package com.anhtester.keywords;
 
 import com.anhtester.drivers.DriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static com.anhtester.drivers.DriverManager.getDriver;
 
 public class MobileUI {
     public static void sleep(double second) {
@@ -30,11 +32,11 @@ public class MobileUI {
         swipe.addAction(finger.createPointerDown(0));
         swipe.addAction(finger.createPointerMove(Duration.ofMillis(durationMillis), PointerInput.Origin.viewport(), endX, endY));
         swipe.addAction(finger.createPointerUp(0));
-        DriverManager.getDriver().perform(Collections.singletonList(swipe));
+        getDriver().perform(Collections.singletonList(swipe));
     }
 
     public static void swipeLeft() {
-        Dimension size = DriverManager.getDriver().manage().window().getSize();
+        Dimension size = getDriver().manage().window().getSize();
         int startX = (int) (size.width * 0.8);
         //int startY = size.height / 2; // Ở chính giữa màn hình
         int startY = (int) (size.height * 0.3); // 1/3 bên trên màn hình
@@ -46,7 +48,7 @@ public class MobileUI {
     }
 
     public static void swipeRight() {
-        Dimension size = DriverManager.getDriver().manage().window().getSize();
+        Dimension size = getDriver().manage().window().getSize();
         int startX = (int) (size.width * 0.2);
         //int startY = size.height / 2; // Ở chính giữa màn hình
         int startY = (int) (size.height * 0.3); // 1/3 bên trên màn hình
@@ -73,7 +75,7 @@ public class MobileUI {
                 .addAction(new Pause(finger, Duration.ofMillis(500)))
                 .addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
-        DriverManager.getDriver().perform(Collections.singletonList(sequence));
+        getDriver().perform(Collections.singletonList(sequence));
     }
 
     public static void tap(int x, int y) {
@@ -83,7 +85,7 @@ public class MobileUI {
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
         tap.addAction(new Pause(finger, Duration.ofMillis(200))); //Chạm nhẹ nhanh
         tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-        DriverManager.getDriver().perform(Arrays.asList(tap));
+        getDriver().perform(Arrays.asList(tap));
     }
 
     public static void tap(int x, int y, int second) {
@@ -93,7 +95,7 @@ public class MobileUI {
         tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
         tap.addAction(new Pause(finger, Duration.ofMillis(second))); //Chạm vào với thời gian chỉ định
         tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-        DriverManager.getDriver().perform(Arrays.asList(tap));
+        getDriver().perform(Arrays.asList(tap));
     }
 
     public static void zoom(WebElement element, double scale) {
@@ -127,7 +129,7 @@ public class MobileUI {
         zoom.addAction(finger1.createPointerUp(0));
         zoom2.addAction(finger2.createPointerUp(0));
 
-        DriverManager.getDriver().perform(Arrays.asList(zoom, zoom2));
+        getDriver().perform(Arrays.asList(zoom, zoom2));
     }
 
     public static void scroll(int startX, int startY, int endX, int endY, int durationMillis) {
@@ -137,7 +139,7 @@ public class MobileUI {
         swipe.addAction(finger.createPointerDown(0));
         swipe.addAction(finger.createPointerMove(Duration.ofMillis(durationMillis), PointerInput.Origin.viewport(), endX, endY));
         swipe.addAction(finger.createPointerUp(0));
-        DriverManager.getDriver().perform(Collections.singletonList(swipe));
+        getDriver().perform(Collections.singletonList(swipe));
     }
 
     public static void scrollGestureCommand() {
@@ -151,6 +153,87 @@ public class MobileUI {
         scrollParams.put("percent", 1); //Scroll 100% của vùng kéo được chỉ định (width, height)
 
         // Thực hiện scroll gesture
-        DriverManager.getDriver().executeScript("mobile: scrollGesture", scrollParams);
+        getDriver().executeScript("mobile: scrollGesture", scrollParams);
     }
+
+    public static void clickElement(By locator, int second) {
+        waitForElementToBeClickable(locator, second).click();
+    }
+
+    // Chờ phần tử có thể click (dùng By locator)
+    public static WebElement waitForElementToBeClickable(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    // Chờ phần tử có thể click (dùng WebElement)
+    public static WebElement waitForElementToBeClickable(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    // Chờ phần tử xuất hiện trên màn hình
+    public static WebElement waitForElementVisibe(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static WebElement waitForElementVisibe(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    // Chờ phần tử biến mất khỏi màn hình
+    public static boolean waitForElementInvisibe(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    // Chờ phần tử tồn tại trong DOM
+    public static WebElement waitForElementPresent(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    // Chờ phần tử có một text cụ thể
+    public static boolean waitForTextToBePresent(By locator, String text, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+    }
+
+    public static boolean waitForTextToBePresent(WebElement element, String text, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
+
+    // Chờ phần tử có một thuộc tính cụ thể
+    public static boolean waitForAttributeToBe(By locator, String attribute, String value, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.attributeToBe(locator, attribute, value));
+    }
+
+    public static boolean waitForAttributeToBe(WebElement element, String attribute, String value, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.attributeToBe(element, attribute, value));
+    }
+
+    // Chờ số lượng phần tử trong danh sách
+    public static List<WebElement> waitForNumberOfElements(By locator, int expectedCount, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.numberOfElementsToBe(locator, expectedCount));
+    }
+
+    // Chờ đến khi URL chứa một đoạn text cụ thể (dành cho hybrid/web app)
+    public static boolean waitForUrlContains(String text, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.urlContains(text));
+    }
+
+    // Chờ đến khi số lượng cửa sổ mở ra đạt một số lượng nhất định (dành cho hybrid/web app)
+    public static boolean waitForNumberOfWindows(int expectedWindows, int timeout) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.numberOfWindowsToBe(expectedWindows));
+    }
+
+
 }

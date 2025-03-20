@@ -73,7 +73,7 @@ public class BaseTest {
             throw new RuntimeException(e);
         }
 
-        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        //DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
     }
 
