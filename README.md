@@ -1,4 +1,4 @@
-# AppiumJava122024
+## Appium Java 12/2024
 
 Project learning online Mobile Test Automation with Appium Java - Anh Tester
 
@@ -8,3 +8,6 @@ Project learning online Mobile Test Automation with Appium Java - Anh Tester
 - TestNG Framework
 - Java >= 17
 - appium_flutterfinder_java
+
+⭐️ Source code từ bài 20 đến hết:
+https://github.com/anhtester/AppiumJava122024_Multi_Platform
